@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" type="text/css" href="/static/style/login.css"/>
         <link rel="stylesheet" href="/static/style/font-awesome.min.css">
         <script type="text/javascript" src="/static/js/jquery.js"></script>
@@ -12,16 +12,28 @@
             <div id="header_title" class="header_title">LifeLine</div>
         </div>
         <div id="content">
-            <div id="show_div" class="show_div"></div>
+            <div id="show_div" class="show_div">
+                <div id="show_1" class="show_text">
+                    <p>地球</p>
+                    <p>45</p><p>亿年</p>
+                </div>
+                <div id="show_2" class="show_text">
+                    <p>人类</p>
+                    <p>50</p><p>万年</p>
+                </div>
+                <div id='show_3' class="show_text">
+                    <p>人口</p><p>70</p><p>亿</p>
+                </div>
+            </div>
             <div id="login_div" class="login_div">
-                <input id="name" type="text" placeholder="UserName" >
-                <input id="passwd" type="password" placeholder="Password">
+                <input id="name" type="text" placeholder="用户名" >
+                <input id="passwd" type="password" placeholder="密码">
                 <div id="login_label" class="login_label">
                     <div id="keep_in" class="keep_in">
-                        <div  id="check_icon"><i class="icon-check-empty"></i></div>
-                        <div id="check_text">Remember me</div>
+                        <div  id="check_icon" check='0'><i class="icon-check-empty"></i></div>
+                        <div id="check_text">记住我</div>
                     </div>
-                    <div id="login_btn">Login</div>
+                    <div id="login_btn">登录</div>
                 </div>
             </div>
         </div>
