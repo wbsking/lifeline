@@ -32,14 +32,6 @@ body{
     background:rgba(200, 200, 200, 0.1);
 }
 
-#show_div{
-    width:400px;
-    height:300px;
-    float:left;
-    margin-left:80px;
-    background:rgba(180, 180, 180, 0.2);
-}
-
 #login_div{
     float:right;
     width:400px;
@@ -55,7 +47,7 @@ input{
     color:white;
     margin-top:40px;
     background:rgba(180, 180, 180, 0.3);
-    border:1px;
+    border:1px solid rgba(255, 255, 255, 0.3);
     padding-left:10px;
 }
 
