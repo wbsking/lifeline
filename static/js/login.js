@@ -1,5 +1,7 @@
 $(
     function(){
+        width = $(window).width();
+        $("#header_title").css({"margin-left":width/2.5});
         $('#check_icon').click(function(){
             if($('#check_icon').attr('check') == '0'){
                 $('#check_icon').children().attr('class', 'icon-check');
@@ -10,26 +12,27 @@ $(
             }
         });
         
-        $('#login_btn').mouseover(function(){
-            $(this).css({'background':'rgba(240, 240, 240, 0.4)'});
-        });
-        
-        $('#login_btn').mouseout(function(){
-            $(this).css({'background':'rgba(180, 180, 180, 0.3)'});
-        });
-        
-        $('input').blur(function(){
-            if(!$.trim($(this).val())){
-                $(this).css({'border':'1px solid rgba(255, 0, 0, 0.4)'});
+
+        $('#header_btn').click(function(){
+            if($(this).attr('login_type') == '0'){
+                $("#login_div").animate({'height':"340px"}, 300);
+                $("#email_div").show(500);
+                $(this).attr('login_type', '1');
+                $(this).text("登录");
+                $("#login_btn").text("注册");
             }else{
-                $(this).css({'border':'1px solid rgba(255, 255, 255, 0.5)'});
+                $("#email_div").hide(500);
+                $("#login_div").animate({'height':'270px'}, 300);
+                $(this).attr('login_type', '0');
+                $(this).text("注册");
+                $("#login_btn").text("登录");
             }
         });
-        
+
         $('#login_btn').click(function(){
             var username = $.trim($('#name').val());
             var passwd = $.trim($('#passwd').val());
-            
+            var check = $('#check_icon').attr('check');
             if (!username){
                 $('#name').css({'border':'1px solid rgba(255, 0, 0, 0.3)'});
             }
@@ -38,8 +41,45 @@ $(
                 $('#passwd').css({'border':'1px solid rgba(255, 0, 0, 0.3)'});
             }
             
+            if ($("#header_btn").attr('login_type') == '1'){
+                var email = $.trim($('#email').val());
+                if (!email){
+                    $('#email').css({'border':'1px solid rgba(255, 0, 0, 0.3)'});
+                }
+                if (username&&passwd&&email){
+                    passwd = hex_md5(passwd);
+                    post_data = {"name":username, "password":passwd, "email":email,
+                        "platform":"web", "is_remember":check
+                    };
+                    $.ajax({
+                        url:"/register",
+                        type:"POST",
+                        data:JSON.stringify(post_data),
+                        dataType:"json"
+                    });
+                }
+            }else{
+                if(username&&passwd){
+                    passwd = hex_md5(passwd);
+                    post_data = {"name":username, "password":passwd, 
+                        "platform":"web", "is_remember":check};
+                    $.ajax({
+                        url:'/login',
+                        type:'POST',
+                        data:JSON.stringify(post_data),
+                        success:function(data){
+                            var code = data.code;
+                            if (code != 1){
+                                var msg = "用户名或密码错误";
+                                $("#login_status").text(msg);
+                            }
+                        }
+                    });
+                }
+
+            }
             
-            $.post('/login', {name:username, password:passwd});
         });
+
     }
-)
+);

@@ -1,3 +1,5 @@
+#-*- coding:utf-8 -*-
+
 import os
 import tornado.httpserver
 import tornado.ioloop
@@ -6,7 +8,8 @@ import torndb
 
 from tornado.options import define, options
 
-from src.usercenter.settings import UCENTER_HANDLERS, UCENTER_DB
+from src.usercenter.urls import UCENTER_HANDLERS
+from src.usercenter.settings import UCENTER_DB
 
 class Application(tornado.web.Application):
     def __init__(self):
@@ -14,7 +17,7 @@ class Application(tornado.web.Application):
         settings = dict(
             template_path=os.path.join(os.path.dirname(__file__), "templates"),
             static_path=os.path.join(os.path.dirname(__file__), "static"),
-            xsrf_cookies=True,
+            #xsrf_cookies=True,
             cookie_secret="__TODO:_GENERATE_YOUR_OWN_RANDOM_VALUE_HERE__",
             debug=True,
             login_url = '/login'

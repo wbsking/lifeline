@@ -2,29 +2,42 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" href="/static/style/font-awesome.min.css"/>
+        <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css"/>
         <link rel="stylesheet" type="text/css" href="/static/style/login.css"/>
-        <link rel="stylesheet" href="/static/style/font-awesome.min.css">
+        <script type="text/javascript" src="/static/js/md5.js"></script>
+        <script type="text/javascript" src="/static/js/json2.js"></script>
         <script type="text/javascript" src="/static/js/jquery.js"></script>
         <script type="text/javascript" src="/static/js/login.js"></script>
-        <scrpit type="text/javascript" src="/static/js/md5.js"></script>
     </head>
     <body>
         <div id="header" class="header">
             <div id="header_title" class="header_title">LifeLine</div>
+            <button id="header_btn" class="btn btn-primary" type="button" login_type='0'>注册</button>
         </div>
         <div id="content">
-            <div id="show_div" class="show_div">
-            </div>
             <div id="login_div" class="login_div">
-                <input id="name" type="text" placeholder="用户名" >
-                <input id="passwd" type="password" placeholder="密码">
+                <div class="login_input input-prepend" id="email_div">
+                    <span class="add-on">邮箱</span>
+                    <input id="email" type="email">
+                </div>
+                <div class="login_input input-prepend">
+                    <span class="add-on">用户名</span>
+                    <input id="name" type="text">
+                </div>
+                <div class="login_input input-prepend">
+                    <span class="add-on">密码</span>
+                    <input id="passwd" type="password">
+                </div>
                 <div id="login_label" class="login_label">
                     <div id="keep_in" class="keep_in">
                         <div  id="check_icon" check='0'><i class="icon-check-empty"></i></div>
                         <div id="check_text">记住我</div>
                     </div>
-                    <div id="login_btn">登录</div>
+                    <button id="login_btn" class="btn btn-primary">登录</button>
                 </div>
+
+                <div id="login_status"></div>
             </div>
         </div>
     </body>
