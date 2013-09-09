@@ -1,3 +1,5 @@
+#-*- coding:utf-8 -*-
+
 import tornado
 import json
 from md5 import md5

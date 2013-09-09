@@ -9,11 +9,12 @@ import torndb
 from tornado.options import define, options
 
 from src.usercenter.urls import UCENTER_HANDLERS
+from src.imagecenter.urls import IMAGE_HANDLERS
 from src.usercenter.settings import UCENTER_DB
 
 class Application(tornado.web.Application):
     def __init__(self):
-        handlers = [] + UCENTER_HANDLERS
+        handlers = [] + UCENTER_HANDLERS + IMAGE_HANDLERS
         settings = dict(
             template_path=os.path.join(os.path.dirname(__file__), "templates"),
             static_path=os.path.join(os.path.dirname(__file__), "static"),
