@@ -2,4 +2,6 @@
 
 from views import *
 
-IMAGE_HANDLERS = [('/image/(.*)', imageHandler)]
+IMAGE_HANDLERS = [
+        ('/image/upload', imageUploadHandler),
+        ('/image/(.*)', imageHandler)]

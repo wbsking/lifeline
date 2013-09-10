@@ -3,8 +3,9 @@
 
 from utils import datetime_to_str, get_now, get_delay_time
 from settings import TOKEN_EXPIRE_DAYS
+from settings import DEFAULT_SMALL_GRAVATAR
 
-class User():
+class User(object):
     TB_NAME = 'user'
     def __init__(self, db):
         self.db = db
@@ -32,17 +33,31 @@ class User():
                                             username, email, password, 
                                             datetime_to_str(now)))
 
-class Profile():
+class Profile(object):
     TB_NAME = 'profile'
 
     def __init__(self, db):
         self.db = db
 
     def get_by_userid(self, user_id):
-        return self.db.get('SELECT * from %s WHERE user_id = %s;' % (self.TB_NAME,
-                                                                   int(user_id)))
+        return self.db.get('SELECT * from %s WHERE user_id = %s and deleted = 0;'\
+                           % (self.TB_NAME, int(user_id)))
 
-class Token():
+    def create(self, user_id):
+        profile = self.get_by_userid(user_id)
+        if profile:
+            raise Exception('user profile exist')
+
+        self.db.execute('INSERT INTO %s SET user_id=%s,\
+                        gravatar_small="%s", createtime="%s"' % (
+                        self.TB_NAME, user_id, DEFAULT_SMALL_GRAVATAR,
+                        get_now()
+                    ))
+    
+    def modify(self, **kwargs):
+        pass
+
+class Token(object):
     TB_NAME = 'token'
 
     EXPIRE_TIME = TOKEN_EXPIRE_DAYS
@@ -104,4 +119,3 @@ class Token():
             self.create(user_id, token, platform)
         else:
             self.update(token_obj.get('id'), token)
-

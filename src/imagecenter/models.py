@@ -21,10 +21,13 @@ class ImageDB(object):
     def get(self, image_id):
         gf = self.db.get(ObjectId(image_id))
         im = gf.read()
-        return im
+        content_type = gf.content_type
+        file_name = gf.file_name
+        return im, content_type, file_name
 
-    def save(self):
-        pass
+    def save(self, content, content_type, image_name):
+        return self.db.put(content, content_type=content_type, file_name=image_name)
+
 if __name__ == '__main__':
     im = ImageDB('localhost', 27017, 'images')
     print im.get('522ddb9e79ed330ff139a0cb')

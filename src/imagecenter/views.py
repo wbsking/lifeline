@@ -14,6 +14,17 @@ class baseHandler(tornado.web.RequestHandler):
 
 class imageHandler(baseHandler):
     def get(self, image_id):
-        content = self.db.get(image_id)
-        self.set_header('Content-Type', 'image/png;charset=utf-8')
+        content, content_type, file_name = self.db.get(image_id)
+        self.set_header('Content-Type', '%s;charset=utf-8' % (content_type))
         self.write(content)
+
+class imageUploadHandler(baseHandler):
+    def post(self):
+        image = self.request.files['image'][0]
+        content = image.get('body', '')
+        content_type = image.get('content_type', '')
+        image_name = image.get('filename', '')
+        image_id = self.db.save(content, content_type, image_name)
+        self.set_status(200)
+        data = str(image_id)
+        self.finish(data)

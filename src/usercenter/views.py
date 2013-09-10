@@ -5,6 +5,7 @@ import json
 from md5 import md5
 
 from models import User, Token
+from models import Profile
 from utils import gen_token, platform_hash
 from settings import MD5_LENGTH, TOKEN_EXPIRE_DAYS
 
@@ -55,6 +56,7 @@ class registerHandler(baseHandler):
         user_id = User(self.db).create(username, password, email)
         new_token = gen_token(user_id)
         Token(self.db).create(user_id, new_token, platform_hash.get(platform, 0)) 
+        Profile(self.db).create(user_id)
         if is_remember == '0':
             self.set_secure_cookie('token', new_token)
         else:
