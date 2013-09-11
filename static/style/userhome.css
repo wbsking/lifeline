@@ -10,7 +10,8 @@ body{
     width:100%;
     min-width:950px;
     height:60px;
-    background-color:#36bbce;
+    /*background-color:#36bbce;*/
+    background-color:#000;
 }
 
 #header_nav{
@@ -50,15 +51,21 @@ body{
 #nav_setting_btn{
     width:60px;
     height:60px;
-    color:black;
     text-align:center;
     line-height:60px;
     font-size:17px;
+    color:white;
+    border-radius:3px;
     cursor:pointer;
+}
+
+#nav_setting_btn:hover{
+    background:#5fd3b3;
 }
 
 .caret{
     vertical-align:middle;
+    border-top:4px solid #fff;
 }
 
 #header-dropdown-menu{
@@ -102,9 +109,6 @@ body{
 #user_name{
     width:60px;
     height:60px;
-    font-size:17px;
-    line-height:60px;
-    text-align:center;
     cursor:pointer;
     float:left;
     border-radius:3px;
@@ -117,7 +121,9 @@ body{
     text-align:center;
     width:60px;
     height:60px;
+    border-radius:3px;
     cursor:pointer;
+    color:white;
 }
 
 #home_page:hover{

@@ -14,7 +14,9 @@
         <div id="header" class="header">
             <div id="header_nav" class="header_nav">
                 <div id="nav_left" class="nav_left">
-                    <div id="user_name"></div>
+                    <div id="user_name">
+                        <img src= "http://localhost/image/{{ profile.get('gravatar_small') }}" />
+                    </div>
                     <div id="home_page">首页</div>
                 </div>
                 <div id="nav_mid" class="nav_mid">
@@ -35,7 +37,7 @@
                             <li class="divider"></li>
                             <li id="import_third"><a href="#">导入第三方账户</a></li>
                             <li class="divider"></li>
-                            <li id="logout"><a href="#">登出</a></li>
+                            <li id="logout"><a href="/user/logout">登出</a></li>
                         </ul>
                     </div>
                 </div>

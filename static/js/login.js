@@ -52,7 +52,7 @@ $(
                         "platform":"web", "is_remember":check
                     };
                     $.ajax({
-                        url:"/register",
+                        url:"/user/register",
                         type:"POST",
                         data:JSON.stringify(post_data),
                         dataType:"json"
@@ -64,7 +64,7 @@ $(
                     post_data = {"name":username, "password":passwd, 
                         "platform":"web", "is_remember":check};
                     $.ajax({
-                        url:'/login',
+                        url:'/user/login',
                         type:'POST',
                         data:JSON.stringify(post_data),
                         success:function(data){

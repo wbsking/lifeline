@@ -29,9 +29,10 @@ class baseHandler(tornado.web.RequestHandler):
 class mainHandler(baseHandler):
     def get(self):
         if not self.current_user:
-            self.redirect('/login')
+            self.redirect('/user/login')
         else:
-            self.render('userhome.html')
+            profile = Profile(self.db).get_by_userid(self.current_user)
+            self.render('userhome.html', profile=profile)
 
 class registerHandler(baseHandler):
     def get(self):
@@ -63,7 +64,7 @@ class registerHandler(baseHandler):
             self.set_secure_cookie('token', new_token,
                                    expires_days=TOKEN_EXPIRE_DAYS)
         
-        return self.render('userhome.html')
+        return self.redirect('/')
 
 class loginHandler(baseHandler):
     def get(self):
@@ -71,7 +72,7 @@ class loginHandler(baseHandler):
             self.render('login.html')
         else:
             #TODO
-            self.render('userhome.html')
+            self.redirect('/')
 
     @tornado.web.asynchronous
     def post(self):
@@ -104,11 +105,15 @@ class loginHandler(baseHandler):
         else:
             self.set_secure_cookie('token', token,
                                    expires_days=TOKEN_EXPIRE_DAYS)
-        return self.render('userhome.html')
+        return self.redirect('/')
 
 class logoutHandler(baseHandler):
     def get(self):
-        pass
+        if self.current_user:
+            self.set_secure_cookie('token', '')
+            return self.redirect('/')
+        else:
+            return self.redirect('/')
 
     def post(self):
         pass
