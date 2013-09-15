@@ -64,14 +64,13 @@ class registerHandler(baseHandler):
             self.set_secure_cookie('token', new_token,
                                    expires_days=TOKEN_EXPIRE_DAYS)
         
-        return self.redirect('/')
+        return self.json_response({'code':1}, status=200)
 
 class loginHandler(baseHandler):
     def get(self):
         if not self.current_user:
             self.render('login.html')
         else:
-            #TODO
             self.redirect('/')
 
     @tornado.web.asynchronous
@@ -105,7 +104,7 @@ class loginHandler(baseHandler):
         else:
             self.set_secure_cookie('token', token,
                                    expires_days=TOKEN_EXPIRE_DAYS)
-        return self.redirect('/')
+        return self.json_response({'code':1}, status=200)
 
 class logoutHandler(baseHandler):
     def get(self):

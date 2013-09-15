@@ -15,7 +15,7 @@ $(
 
         $('#header_btn').click(function(){
             if($(this).attr('login_type') == '0'){
-                $("#login_div").animate({'height':"340px"}, 300);
+                $("#login_div").animate({'height':"360px"}, 300);
                 $("#email_div").show(500);
                 $(this).attr('login_type', '1');
                 $(this).text("登录");
@@ -55,7 +55,16 @@ $(
                         url:"/user/register",
                         type:"POST",
                         data:JSON.stringify(post_data),
-                        dataType:"json"
+                        dataType:"json",
+                        success:function(data){
+                            var code = data.code;
+                            var message = data.message;
+                            if (code!=1){
+                                $('#login_status').text(message);
+                            }else{
+                                window.location.href='/';
+                            }
+                        }
                     });
                 }
             }else{
@@ -69,17 +78,15 @@ $(
                         data:JSON.stringify(post_data),
                         success:function(data){
                             var code = data.code;
+                            var message = data.message;
                             if (code != 1){
-                                var msg = "用户名或密码错误";
-                                $("#login_status").text(msg);
+                                $("#login_status").text(message);
+                            }else{
+                                window.location.href='/';
                             }
-                        }
-                    });
-                }
-
+                        }});
+                    };
             }
-            
         });
-
     }
 );
