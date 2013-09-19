@@ -344,7 +344,7 @@ body{
 
 .new_post{
     width:96%;
-    height:140px;
+    height:150px;
     margin-top:10px;
     margin-left:auto;
     margin-right:auto;
@@ -396,30 +396,44 @@ body{
 }
 
 .line_content{
-    width:96%;
-    height:500px;
+    width:736px;
     margin-left:auto;
     margin-right:auto;
-    margin-top:20px;
+    margin-top:40px;
     border-left-color:rgba(150, 150, 150, 1);
     border-left-width:4px;
     border-left-style:solid;
 }
 
 .line_element{
-    width:70%;
+    width:550px;
     position:relative;
     height:200px;
-    margin-left:25%;
+    margin-left:160px;
+    border-radius:10px;
     background-color:rgba(100, 100, 100, 1);
 }
 
 .line_element:before{
     content:'';
     position:absolute;
-    width:100px;
-    top:100px;
-    left:-300px;
-    height:3px;
-    background-color:rgba(200, 200, 200, 1);
+    width:160px;
+    top:50px;
+    left:-160px;
+    height:1px;
+    background-color:rgba(100, 100, 100, 1);
+}
+
+.line_element:after{
+    content:"";
+    position:absolute;
+    width:10px;
+    height:10px;
+    top:43px;
+    left:-169px;
+    border-radius:10px;
+    border-width:2px;
+    border-color:white;
+    border-style:solid;
+    background-color:rgba(50, 50, 50, 1);
 }
