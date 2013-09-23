@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" href="/static/style/font-awesome.min.css">
+        <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/bootstrap/css/bootstrap-responsive.min.css">
+        <link rel="stylesheet" href="/static/style/base.css"/>
+        {% block css_header %}{% end %}
+        <script type="text/javascript" src="/static/js/jquery.js"></script>
+        <script type="text/javascript" src="/static/bootstrap/js/bootstrap.min.js"></script>
+        {% block js_header %}{% end %}
+    </head>
+    <body>
+        <div id="header" class="header">
+            <div id="header_nav" class="header_nav">
+                <div id="nav_left" class="nav_left">
+                    <a id="home_page" class="nav_highlight" href="/">首页</a>
+                    <div id="user_home_page">我的主页</div>
+                </div>
+                <div id="nav_mid" class="nav_mid">
+                    <div id="nav_logo">LifeLine</div>
+                </div>
+                <div id="nav_right" class="nav_right">
+                    <div class="btn-group">
+                        <div id="nav_setting_btn" class="dropdown-toggle" data-toggle="dropdown">
+                            设置
+                            <span class="caret"></span>
+                        </div>
+                        <ul class="dropdown-menu" id="header-dropdown-menu">
+                            <li class="dropdown-caret">
+                                <span class="caret-outer"></span>
+                                <span class="caret-inner"></span>
+                            </li>
+                            <li id="modify_profile"><a href="/user/profile">修改个人资料</a></li>
+                            <li class="divider"></li>
+                            <li id="import_third"><a href="#">导入第三方账户</a></li>
+                            <li class="divider"></li>
+                            <li id="logout"><a href="/user/logout">登出</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% block body %}{% end %}
+    </body>
+</html>

@@ -10,3 +10,8 @@ UCENTER_DB = {'host':'127.0.0.1:3306',
               'user':'root',
               'passwd':'lifeline'
             }
+
+LOGIN_URL = '/user/login'
+REGISTER_URL = '/user/register'
+LOGOUT_URL = '/user/logout'
+PROFILE_URL = '/user/profile'

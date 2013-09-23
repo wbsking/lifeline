@@ -8,6 +8,10 @@ from models import User, Token
 from models import Profile
 from utils import gen_token, platform_hash
 from settings import MD5_LENGTH, TOKEN_EXPIRE_DAYS
+from settings import LOGIN_URL
+from settings import LOGOUT_URL
+from settings import REGISTER_URL
+from settings import PROFILE_URL
 
 class baseHandler(tornado.web.RequestHandler):
     @property
@@ -29,10 +33,10 @@ class baseHandler(tornado.web.RequestHandler):
 class mainHandler(baseHandler):
     def get(self):
         if not self.current_user:
-            self.redirect('/user/login')
+            self.redirect(LOGIN_URL)
         else:
             profile = Profile(self.db).get_by_userid(self.current_user)
-            self.render('userhome.html', profile=profile)
+            self.render('home.html', profile=profile)
 
 class registerHandler(baseHandler):
     def get(self):
@@ -119,7 +123,11 @@ class logoutHandler(baseHandler):
 
 class modifyHandler(baseHandler):
     def get(self):
-        pass
+        if not self.current_user:
+            self.redirect(LOGIN_URL)
+        else:
+            profile = Profile(self.db).get_by_userid(self.current_user)
+            self.render('profile.html', profile=profile)
 
     def post(self):
         pass
