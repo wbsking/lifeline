@@ -7,7 +7,7 @@ body{
     background-image:url(/static/img/home_2.jpg);
     background-position:-100px 50px;
     background-attachment:fixed;
-    background-color:#5ccdc9;
+    background-color:rgba(0, 200, 200, 0.4);
     background-repeat:no-repeat;
 }
 
