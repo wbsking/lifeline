@@ -39,41 +39,54 @@
                     </li>
                 </ul>
             </div>
+        </div>
     </div>
-</div>
-<div class="user_info">
-    <div id="base_info">
-        <div class="info_title">修改基本信息</div>
-        <div class="info_content">
-            <div class="gra">
-            </div>
-            <div class="username input-prepend">
-                <span class="add-on">用户昵称</span>
-                <input id="username" type="text">
-            </div>
-            <div class="passwd input-prepend">
-                <span class="add-on">新密码</span>
-                <input id="passwd" type="password" placeholder="请输入新密
-                码">
-            </div>
+    <div class="user_info">
+        <div id="base_info">
+            <div class="info_title">修改基本信息</div>
+            <div class="info_content">
+                <div class="gra">
+                </div>
+                <div class="username input-prepend">
+                    <span class="add-on">用户昵称</span>
+                    <input id="username" type="text">
+                </div>
+                <div class="passwd">
+                    <div class="old_passwd input-prepend">
+                        <span class="add-on">原始密码</span>
+                        <input id="old_passwd" type="password" placeholder="请输入原始密码">
+                    </div>
+                    <div class="new_passwd input-prepend">
+                        <span class="add-on">新密码</span>
+                        <input id="new_passwd" type="password" placeholder="请输入新密码">
+                    </div>
+                </div>
 
-            <div class="gender">
-                <span class="pre_span">性别</span>
-                <div class="male">男</div>
-                <div class="female">女</div>
-                <div class="unknown">未知</div>
+                <div class="gender">
+                    <span class="pre_span">性别</span>
+                    <div class="male">男</div>
+                    <div class="female">女</div>
+                    <div class="unknown">未知</div>
+                </div>
+                <div class="birthday">
+                    <span class="pre_span">生日</span>
+                    <input type="text">
+                    <span>年</span>
+                    <input type="text">
+                    <span>月</span>
+                    <input type="text">
+                    <span>日</span>
+                </div>
+
             </div>
-            <div class="birthday">
-                <span class="pre_span">生日</span>
+        </div>
+        <div id="contact_info">
+            <div class="info_title">联系信息</div>
+            <div class="info_content">
+
             </div>
 
         </div>
-    </div>
-    <div id="contact_info">
-        <div class="info_title">联系信息</div>
-        <div class="info_content">
-        </div>
-
     </div>
 </div>
 {% end %}
