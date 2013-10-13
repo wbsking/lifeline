@@ -173,6 +173,7 @@
     height:30px;
     line-height:30px;
     font-size:18px;
+    color:#2f96b4;
     border-bottom-color:rgba(200, 200, 200, 0.6);
     border-bottom-style:solid;
     border-bottom-width:1px;
@@ -180,6 +181,7 @@
 
 #contact_info{
     width:700px;
+    margin-top:20px;
     margin-left:auto;
     margin-right:auto;
 }
@@ -192,8 +194,12 @@
 }
 
 .username{
-    margin-top:10px;
+    margin-top:15px;
     width:600px;
+}
+
+.real_name{
+    margin-bottom:20px;
 }
 
 .input-prepend .add-on{
@@ -202,6 +208,7 @@
 }
 
 div .gender{
+    margin-top:15px;
     height:30px;
     margin-left:200px;
 }
@@ -242,5 +249,44 @@ div .gender{
 div .birthday{
     height:30px;
     margin-left:200px;
-    margin-top:10px;
+    margin-top:15px;
+}
+
+.birthday .i1{
+    float:left;
+    width:34px;
+    border-radius:0;
+    margin-right:-1px;
+}
+
+.birthday .i0{
+    float:left;
+    width:25px;
+    border-radius:0;
+    margin-right:-1px;
+    margin-left:-1px;
+}
+
+.birthday .lab_span{
+    float:left;
+    width:21px;
+    height:20px;
+    margin-left:0;
+    padding:4px 5px;
+    background-color:#eee;
+    border:1px solid #ccc;
+}
+
+.birthday .lab_span:last-child{
+    border-radius:0 4px 4px 0;
+}
+
+.save_info_div{
+    display:block;
+    width:200px;
+    height:30px;
+    margin-top:20px;
+    margin-left:auto;
+    margin-right:auto;
+    border-radius:15px;
 }
