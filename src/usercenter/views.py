@@ -131,3 +131,18 @@ class modifyHandler(baseHandler):
 
     def post(self):
         pass
+
+
+class profileBaseHandler(baseHandler):
+    def get(self):
+        if not self.current_user:
+            self.redirect(LOGIN_URL)
+        else:
+            self.render('profile_base.html')
+
+class profilePasswdHandler(baseHandler):
+    def get(self):
+        if not self.current_user:
+            self.redirect(LOGIN_URL)
+        else:
+            self.render('profile_passwd.html')

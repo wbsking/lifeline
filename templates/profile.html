@@ -5,6 +5,8 @@
 {% end %}
 
 {% block js_header %}
+<script type="text/javascript" src="/static/js/jquery.leanModal.min.js"></script>
+<script type="text/javascript" src="/static/js/profile.js"></script>
 {% end %}
 
 {% block body %}
@@ -29,8 +31,12 @@
                     </div>
                 </div>
                 <ul class="dash_user_nav">
-                    <li>
+                    <li id="profile_base">
                         <a href="#">基本信息</a>
+                        <i class="icon-chevron-right"></i>
+                    </li>
+                    <li id="profile_passwd">
+                        <a href="#">密码</a>
                         <i class="icon-chevron-right"></i>
                     </li>
                 </ul>
@@ -39,46 +45,7 @@
     </div>
     <div class="user_info">
         <div id="base_info">
-            <div class="info_title">修改基本信息</div>
-            <div class="info_content">
-                <div class="gra">
-                </div>
-                <div class="username input-prepend">
-                    <span class="add-on">用户昵称</span>
-                    <input id="username" type="text">
-                </div>
-                <div class="real_name input-prepend">
-                    <span class="add-on">真实姓名</span>
-                    <input id="realname" type="text">
-                </div>
-                <div class="passwd">
-                    <div class="old_passwd input-prepend">
-                        <span class="add-on">原始密码</span>
-                        <input id="old_passwd" type="password" placeholder="无需修改则不填">
-                    </div>
-                    <div class="new_passwd input-prepend">
-                        <span class="add-on">新密码</span>
-                        <input id="new_passwd" type="password" placeholder="请输入新密码">
-                    </div>
-                </div>
-
-                <div class="gender">
-                    <span class="pre_span">性别</span>
-                    <div class="male">男</div>
-                    <div class="female">女</div>
-                    <div class="unknown">未知</div>
-                </div>
-                <div class="birthday">
-                    <span class="pre_span">生日</span>
-                    <input class="i1" type="text">
-                    <span class="lab_span">年</span>
-                    <input class="i0" type="text">
-                    <span class="lab_span">月</span>
-                    <input class="i0" type="text">
-                    <span class="lab_span">日</span>
-                </div>
-            </div>
-            <button class="save_info_div btn btn-primary">保存</button>
+            {% include "profile_base.html" %}
         </div>
     </div>
 </div>

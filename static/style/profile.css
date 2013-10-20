@@ -170,9 +170,9 @@
 
 .info_title{
     width:680px;
-    height:30px;
-    line-height:30px;
-    font-size:18px;
+    height:50px;
+    line-height:50px;
+    font-size:22px;
     color:#2f96b4;
     border-bottom-color:rgba(200, 200, 200, 0.6);
     border-bottom-style:solid;
@@ -191,6 +191,40 @@
     margin-left:auto;
     margin-right:auto;
     width:600px;
+}
+
+.info_content .gra{
+    margin-top:10px;
+    width:300px;
+    height:104px;
+    border-radius:4px;
+    background-color:#eee;
+}
+
+#upload{
+    float:left;
+    margin-top:35px;
+    margin-left:-82px;
+    width:85px;
+    height:35px;
+    opacity:0;
+    z-index:10;
+}
+
+
+.gra .btn{
+    float:left;
+    margin-top:35px;
+}
+
+.gra .gra_show{
+    float:left;
+    width:100px;
+    height:100px;
+    margin-top:2px;
+    margin-left:40px;
+    border-radius:50px;
+    background-image:url('/static/img/photo.jpg');
 }
 
 .username{
@@ -281,7 +315,7 @@ div .birthday{
     border-radius:0 4px 4px 0;
 }
 
-.save_info_div{
+.save_info_btn{
     display:block;
     width:200px;
     height:30px;
@@ -289,4 +323,31 @@ div .birthday{
     margin-left:auto;
     margin-right:auto;
     border-radius:15px;
+}
+
+.passwd{
+    margin-top:10px;
+}
+
+#lean_overlay{
+    position:fixed;
+    z-index:100;
+    top:0px;
+    left:0px;
+    height:100%;
+    width:100%;
+    background:#000;
+    display:none;
+}
+
+#change_size{
+    display:none;
+    position:fixed;
+    z-index:1000;
+    left:50%;
+    margin-left:-150px;
+    top:100px;
+    width:500px;
+    height:500px;
+    background-color:rgba(200, 200, 200, 1);
 }
