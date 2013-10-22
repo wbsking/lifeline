@@ -1,10 +1,10 @@
 <div class="info_title">修改基本信息</div>
 <div class="info_content">
     <div class="gra">
-        <button class="btn btn-info">更改头像</button>
+        <img class="gra_show" />
+        <button class="btn btn-primary">更改头像</button>
         <input type="file" id="upload"> 
-        <image class="gra_show"></image>
-        <a id="modal_link" rel="leanModal" name="change_size" href="#change_size">test</a>
+        <a id="modal_link" rel="leanModal" name="change_size" href="#change_size"></a>
     </div>
     <div class="username input-prepend">
         <span class="add-on">用户昵称</span>
@@ -33,4 +33,20 @@
 </div>
 <button id="base_save" class="save_info_btn btn btn-primary">保存</button>
 
-<div id="change_size"></div>
+<div id="change_size">
+    <div id="change_size_header">
+        <span class="header_title">编辑头像</span>
+        <a class="modal_close" href="#"></a>
+    </div>
+    <img class="pic_show" />
+    <div class="gra_preview">
+        <div class="preview_box">
+            <img style="position:relative;" id="preview" />
+        </div>
+    </div>
+    <input type="hidden" name="x1" value="" />
+    <input type="hidden" name="y1" value="" />
+    <input type="hidden" name="x2" value="" />
+    <input type="hidden" name="y2" value="" />
+    <button class="save_gra btn btn-primary">应用</button>
+</div>

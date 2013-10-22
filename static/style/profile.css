@@ -196,33 +196,30 @@
 .info_content .gra{
     margin-top:10px;
     width:300px;
-    height:104px;
     border-radius:4px;
     background-color:#eee;
 }
 
 #upload{
-    float:left;
-    margin-top:35px;
-    margin-left:-82px;
     width:85px;
     height:35px;
+    margin-top:-50px;
     opacity:0;
     z-index:10;
 }
 
 
 .gra .btn{
-    float:left;
-    margin-top:35px;
+    display:block;
+    margin-top:10px;
+    margin-left:auto;
+    margin-right:auto;
 }
 
 .gra .gra_show{
-    float:left;
     width:100px;
     height:100px;
-    margin-top:2px;
-    margin-left:40px;
+    margin-top:5px;
     border-radius:50px;
     background-image:url('/static/img/photo.jpg');
 }
@@ -348,6 +345,65 @@ div .birthday{
     margin-left:-150px;
     top:100px;
     width:500px;
-    height:500px;
-    background-color:rgba(200, 200, 200, 1);
+    border-radius:10px;
+    background-color:rgba(255, 255, 255, 1);
 }
+
+#change_size_header{
+    font-size:20px;
+    line-height:50px;
+    height:50px;
+    border-radius: 10px 10px 0 0;
+    border-bottom-color:rgba(200, 200, 200, 0.5);
+    border-bottom-style:solid;
+    border-bottom-width:1px;
+    background-color:rgba(220, 220, 220, 1);
+}
+
+
+#change_size_header .modal_close{
+    float:right;
+    margin-top:18px;
+    margin-right:10px;
+    z-index:20;
+    display:block;
+    width:14px;
+    height:14px;
+    background:url("/static/img/modal_close.png");
+}
+
+.pic_show{
+    max-height:380px;
+    max-width:350px;
+}
+
+.gra_preview{
+    width:300px;
+    height:150px;
+    margin-left:auto;
+    margin-right:auto;
+    overflow:hidden;
+}
+
+.preview_box{
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:25px;
+    width:100px;
+    height:100px;
+    border-radius:50px;
+    overflow:hidden;
+    background-color:rgba(200, 200, 200, 0.5);
+}
+
+#preview{
+    max-width:10000px;
+}
+
+.save_gra{
+    display:block;
+    width:500px;
+    height:30px;
+    bottom:0;
+}
+
