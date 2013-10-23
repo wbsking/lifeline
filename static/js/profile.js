@@ -27,9 +27,17 @@ $(function(){
         reader.onload = function(e){
             $(".pic_show").attr("src", e.target.result);
             $("#preview").attr("src", e.target.result);
-            var file = $(":file");
-            file.after(file.clone().val(""));
-            file.remove();
+            if($("form").length > 1){
+                var f_0 = $("form:first");
+                var f_1 = $("form:last");
+                f_1.after(f_1.clone());
+                f_0.remove();
+                $("form:first").css("display", "none");
+            }else{
+                var f_0 = $("form");
+                f_0.after(f_0.clone());
+                $("form:first").css("display", "none");
+            }
         };
         reader.readAsDataURL(file);
     });
@@ -61,4 +69,17 @@ $(function(){
             url:"/user/profile",
         });
     });
+
+     $("#upload_gra").click(function(){
+        var formdata = new FormData($("form:first")[0]);
+        $.ajax({
+            url:"/image/upload",
+            type:"POST",
+            data:formdata,
+            contentType:false,
+            processData:false,
+            success:function(data){
+            }
+        });
+     });
 });

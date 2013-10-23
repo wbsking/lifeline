@@ -3,7 +3,13 @@
     <div class="gra">
         <img class="gra_show" />
         <button class="btn btn-primary">更改头像</button>
-        <input type="file" id="upload"> 
+        <form>
+            <input type="hidden" name="x1" value="" />
+            <input type="hidden" name="y1" value="" />
+            <input type="hidden" name="x2" value="" />
+            <input type="hidden" name="y2" value="" />
+            <input type="file" name="image" id="upload" />
+        </form>
         <a id="modal_link" rel="leanModal" name="change_size" href="#change_size"></a>
     </div>
     <div class="username input-prepend">
@@ -44,9 +50,5 @@
             <img style="position:relative;" id="preview" />
         </div>
     </div>
-    <input type="hidden" name="x1" value="" />
-    <input type="hidden" name="y1" value="" />
-    <input type="hidden" name="x2" value="" />
-    <input type="hidden" name="y2" value="" />
-    <button class="save_gra btn btn-primary">应用</button>
+    <button id="upload_gra" class="save_gra btn btn-primary">应用</button>
 </div>
