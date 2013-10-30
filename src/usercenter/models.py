@@ -1,121 +1,100 @@
 #! /usr/bin/env python
 #-*- coding:utf-8 -*-
 
-from utils import datetime_to_str, get_now, get_delay_time
-from settings import TOKEN_EXPIRE_DAYS
-from settings import DEFAULT_SMALL_GRAVATAR
+from datetime import datetime
 
-class User(object):
-    TB_NAME = 'user'
-    def __init__(self, db):
-        self.db = db
-    
-    def get_by_id(self, user_id):
-        return self.db.get('SELECT * from %s WHERE id = %s and deleted =\
-                           1' % (self.TB_NAME, int(user_id)))
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import Column
+from sqlalchemy.types import BigInteger
+from sqlalchemy.types import VARCHAR
+from sqlalchemy.types import Boolean
+from sqlalchemy.types import DateTime
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm.exc import NoResultFound
 
-    def get_by_name_or_mail(self, username):
-        user = self.db.get('SELECT * from %s WHERE name = "%s" or email = "%s"\
-                           and deleted = 0' %(self.TB_NAME, username, username))
-        return user
+from utils import gen_uid
 
-    def get_by_token(self, token):
-        token_coll = Token(self.db).get_by_token(token)
-        if not token_coll:
-            return None
-        return token_coll.get('user_id', None)
-    
-    def create(self, username, password, email):
-        now = get_now()
-        return self.db.execute_lastrowid('INSERT INTO %s (name, email, password,\
-                                         createtime) values("%s", "%s", "%s", "%s");'\
-                                         % (self.TB_NAME,
-                                            username, email, password, 
-                                            datetime_to_str(now)))
+CONN_STR = "mysql://root:lifeline@localhost/usercenter?charset=utf8"
+engine = create_engine(CONN_STR, echo=True)
+session_obj = sessionmaker(bind=engine)
+SESSION = session_obj()
 
-class Profile(object):
-    TB_NAME = 'profile'
+baseModel = declarative_base()
 
-    def __init__(self, db):
-        self.db = db
+def init_db():
+    baseModel.metadata.create_all(engine)
 
-    def get_by_userid(self, user_id):
-        return self.db.get('SELECT * from %s WHERE user_id = %s and deleted = 0;'\
-                           % (self.TB_NAME, int(user_id)))
+def drop_db():
+    baseModel.metadata.drop_all(engine)
 
-    def create(self, user_id):
-        profile = self.get_by_userid(user_id)
-        if profile:
-            raise Exception('user profile exist')
+class User(baseModel):
+    __tablename__ = 'user'
+    __table_args__ = {"mysql_engine":'InnoDB', "mysql_charset":'utf8'}
 
-        self.db.execute('INSERT INTO %s SET user_id=%s,\
-                        gravatar_small="%s", createtime="%s"' % (
-                        self.TB_NAME, user_id, DEFAULT_SMALL_GRAVATAR,
-                        get_now()
-                    ))
-    
-    def modify(self, **kwargs):
-        pass
+    id = Column(BigInteger, primary_key=True)
+    uid = Column(BigInteger)
+    name = Column(VARCHAR(32))
+    email = Column(VARCHAR(320))
+    passwd = Column(VARCHAR(64))
+    create_time = Column(DateTime, default=datetime.utcnow)
+    update_time = Column(DateTime, onupdate=datetime.utcnow)
+    deleted = Column(Boolean, default=False)
 
-class Token(object):
-    TB_NAME = 'token'
+    def __init__(self, name, email, passwd):
+        self.name = name
+        self.email = email
+        self.passwd = passwd
+        self.uid = 0
 
-    EXPIRE_TIME = TOKEN_EXPIRE_DAYS
+    def __repr__(self):
+        return u"<User('%s')>" % self.name
 
-    def __init__(self, db):
-        self.db = db
+    def update_uid(self):
+        self.uid = gen_uid(self.id)
 
-    def get_by_token(self, token, platform=0):
-        return self.db.get('SELECT * from %s WHERE token = "%s" and platform = %s\
-                           and deleted = 0;' % (self.TB_NAME, token, platform))
-
-    def get_by_user(self, user_id, platform=0):
-        token = self.db.get('SELECT * from %s WHERE user_id=%s and platform=%s\
-                           and deleted=0' % (self.TB_NAME, int(user_id),
-                                                    int(platform)))
-        if token:
-            expire_time = token.get('expiretime')
-            token_id = token.get('id')
-            now = get_now()
-            if now >= expire_time:
-                self.db.execute('UPDATE %s SET deleted=1 where id=%s' %
-                                (self.TB_NAME,
-                                 int(token_id)))
-                return None
-            else:
-                expire_time = get_delay_time(now, self.EXPIRE_TIME)
-                self.db.execute('UPDATE %s SET expiretime="%s" where id=%s;' %(self.TB_NAME,
-                                                datetime_to_str(expire_time),
-                                                int(token_id)))
-                return token
-        else:
+    @staticmethod
+    def get(**kwargs):
+        kwargs['deleted']  = False
+        try:
+            query = SESSION.query(User).filter_by(**kwargs).one()
+        except NoResultFound:
             return None
 
-    def create(self, user_id, token, platform=0):
-        now = get_now()
-        expire_time = get_delay_time(now, self.EXPIRE_TIME)
+    @staticmethod
+    def create(**kwargs):
+        user = User(**kwargs)
+        SESSION.add(user)
+        SESSION.flush()
+        SESSION.refresh(user)
+        user.update_uid()
+        SESSION.commit()
 
-        return self.db.execute_lastrowid('INSERT INTO %s (token, createtime, \
-                        user_id, platform, expiretime)\
-                                        values("%s", "%s", %s, %s, "%s");' %(
-                                                                    self.TB_NAME,
-                                                                    token, 
-                                                                     datetime_to_str(now),
-                                                                     user_id,
-                                                                     platform,
-                                                                     datetime_to_str(expire_time)
-                                                                     ))
+class Token(baseModel):
+    __tablename__ = 'token'
+    __table_args__ = {"mysql_engine":'InnoDB', "mysql_charset":'utf8'}
     
-    def update(self, token_id, token):
-        self.db.execute('UPDATE %s SET token="%s" WHERE id=%s;' %(self.TB_NAME,
-                                                                  token,
-                                                                  token_id
-                                                                  ))
-        
+    id = Column(BigInteger, primary_key=True)
+    uid = Column(BigInteger)
+    token = Column(VARCHAR(64))
+    create_time = Column(DateTime, default=datetime.utcnow)
+    update_time = Column(DateTime, onupdate=datetime.utcnow)
+    deleted = Column(Boolean, default=False)
+    
+    @staticmethod
+    def get_uid(**kwargs):
+        kwargs['deleted'] = False
+        try:
+            query = SESSION.query(Token).filter_by(**kwargs).one()
+            return query.uid
+        except NoResultFound:
+            return None
 
-    def save(self, user_id, token, platform):
-        token_obj = self.get_by_user(user_id, platform)
-        if not token_obj: 
-            self.create(user_id, token, platform)
-        else:
-            self.update(token_obj.get('id'), token)
+class Profile(baseModel):
+    __tablename__ = 'profile'
+    __table_args__ = {"mysql_engine":'InnoDB', "mysql_charset":'utf8'}
+    
+    id = Column(BigInteger, primary_key=True)
+
+if __name__ == '__main__':
+    init_db()

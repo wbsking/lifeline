@@ -29,3 +29,8 @@ def get_delay_time(curr_time, delay_days):
 
 def datetime_to_str(time):
     return time.strftime(TIME_FORMAT)
+
+def gen_uid(uid):
+    uid = str(uid)
+    time_str = time.time().__repr__().replace('.', '')[-5:]
+    return int(uid+time_str)

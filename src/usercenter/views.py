@@ -4,6 +4,7 @@ import tornado
 import json
 from md5 import md5
 
+import models
 from models import User, Token
 from models import Profile
 from utils import gen_token, platform_hash
@@ -15,14 +16,14 @@ from settings import PROFILE_URL
 
 class baseHandler(tornado.web.RequestHandler):
     @property
-    def db(self):
-        return self.application.ucenter_db
+    def session(self):
+        return models.SESSION
     
     def get_current_user(self):
         token = self.get_secure_cookie('token')
         if not token:
             return None
-        return User(self.db).get_by_token(token)
+        return Token.get_uid(token=token)
 
     def json_response(self, data='', status=200):
         self.set_header("Content-Type", "application/json;charset=UTF-8")
@@ -53,12 +54,14 @@ class registerHandler(baseHandler):
         email = data.get('email', None)
         platform = data.get('platform', None)
         is_remember = data.get('is_remember', None)
-        user = User(self.db).get_by_name_or_mail(email)
+        user = User.get(email=email)
         if user:
             return self.json_response({'message':'User existed!'}, status=200)
         if len(password) != MD5_LENGTH:
             return self.json_response({'message':'password length not correct'}, status=200)
-        user_id = User(self.db).create(username, password, email)
+        user_id = User.create(name=username, passwd=password, email=email)
+        return self.json_response({'code':1}, status=200)
+
         new_token = gen_token(user_id)
         Token(self.db).create(user_id, new_token, platform_hash.get(platform, 0)) 
         Profile(self.db).create(user_id)
