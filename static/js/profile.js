@@ -13,6 +13,8 @@ function preview(img, selection){
     $('input[name="y1"]').val(selection.y1);
     $('input[name="x2"]').val(selection.x2);
     $('input[name="y2"]').val(selection.y2);
+    $('input[name="p_width"]').val(p_width);
+    $('input[name="p_height"]').val(p_height);
 }
 
 $(function(){
@@ -79,6 +81,10 @@ $(function(){
             contentType:false,
             processData:false,
             success:function(data){
+                $(".gra_show").attr("src", data);
+                $("#dash_gra").attr("src", data);
+                $("#change_size").css("display", "none");
+                $("#lean_overlay").css("display", "none");
             }
         });
      });

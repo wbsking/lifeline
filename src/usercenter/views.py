@@ -1,9 +1,9 @@
 #-*- coding:utf-8 -*-
 
-import tornado
 import json
 from md5 import md5
 
+import tornado
 import models
 from models import User, Token
 from models import Profile
@@ -23,7 +23,10 @@ class baseHandler(tornado.web.RequestHandler):
         token = self.get_secure_cookie('token')
         if not token:
             return None
-        return Token.get_uid(token=token)
+        token = Token.get_by_uid(token=token)
+        if not token:
+            return None
+        return token.uid
 
     def json_response(self, data='', status=200):
         self.set_header("Content-Type", "application/json;charset=UTF-8")
@@ -36,7 +39,7 @@ class mainHandler(baseHandler):
         if not self.current_user:
             self.redirect(LOGIN_URL)
         else:
-            profile = Profile(self.db).get_by_userid(self.current_user)
+            profile = Profile.get(uid=self.current_user)
             self.render('home.html', profile=profile)
 
 class registerHandler(baseHandler):
@@ -52,7 +55,6 @@ class registerHandler(baseHandler):
         username = data.get('name', None)
         password = data.get('password', None)
         email = data.get('email', None)
-        platform = data.get('platform', None)
         is_remember = data.get('is_remember', None)
         user = User.get(email=email)
         if user:
@@ -60,11 +62,10 @@ class registerHandler(baseHandler):
         if len(password) != MD5_LENGTH:
             return self.json_response({'message':'password length not correct'}, status=200)
         user_id = User.create(name=username, passwd=password, email=email)
-        return self.json_response({'code':1}, status=200)
 
         new_token = gen_token(user_id)
-        Token(self.db).create(user_id, new_token, platform_hash.get(platform, 0)) 
-        Profile(self.db).create(user_id)
+        Token.create(user_id, new_token)
+        Profile.create(uid=user_id)
         if is_remember == '0':
             self.set_secure_cookie('token', new_token)
         else:
@@ -88,24 +89,22 @@ class loginHandler(baseHandler):
             return json_response(status=400)
         username = data.get('name', None)
         passwd = data.get('password', None)
-        platform = data.get('platform', None)
         is_remember = data.get('is_remember', None)
         if not username or not passwd:
             return self.json_response({'message':'user name or password is empty'},
                                status=200)
-        user = User(self.db).get_by_name_or_mail(username)
+        user = User.get(email=username)
         if not user:
             return self.json_response({'code':2, 'message':'cannot find the user'}, status=200)
-        if passwd != user.get('password'):
+        if passwd != user.passwd:
             return self.json_response({'code':2, 'message':'password is wrong'}, status=200)
 
-        platform = platform_hash.get(platform)
-        token = Token(self.db).get_by_user(user.get('id', 0), platform)
+        token = Token.get_by_uid(uid=user.uid)
         if not token:
-            token = gen_token(user.get('id'))
-            Token(self.db).save(user.get('id'), token, platform)
+            token = gen_token(user.uid)
+            Token.create(uid=user.uid, token=token)
         else:
-            token = token.get('token')
+            token = token.token
         if is_remember == '0':
             self.set_secure_cookie('token', token)
         else:
@@ -129,7 +128,7 @@ class modifyHandler(baseHandler):
         if not self.current_user:
             self.redirect(LOGIN_URL)
         else:
-            profile = Profile(self.db).get_by_userid(self.current_user)
+            profile = Profile.get(uid=self.current_user)
             self.render('profile.html', profile=profile)
 
     def post(self):

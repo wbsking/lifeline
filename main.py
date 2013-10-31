@@ -10,7 +10,6 @@ from tornado.options import define, options
 
 from src.usercenter.urls import UCENTER_HANDLERS
 from src.imagecenter.urls import IMAGE_HANDLERS
-from src.usercenter.settings import UCENTER_DB
 
 class Application(tornado.web.Application):
     def __init__(self):
@@ -24,10 +23,6 @@ class Application(tornado.web.Application):
             login_url = '/login'
         )
         tornado.web.Application.__init__(self, handlers, **settings)
-
-        self.ucenter_db = torndb.Connection(
-            host=UCENTER_DB['host'], database=UCENTER_DB['database'],
-            user=UCENTER_DB['user'], password=UCENTER_DB['passwd'])
 
 def main():
     http_server = tornado.httpserver.HTTPServer(Application())
