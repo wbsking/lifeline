@@ -15,7 +15,7 @@ function preview(img, selection){
     $('input[name="y2"]').val(selection.y2);
     $('input[name="p_width"]').val(p_width);
     $('input[name="p_height"]').val(p_height);
-}
+};
 
 $(function(){
     $("#modal_link").leanModal({closeButton:".modal_close"});
@@ -64,13 +64,6 @@ $(function(){
             }
         });
     });
-    
-    $("#base_save").click(function(){
-        $.ajax({
-            type:"POST",
-            url:"/user/profile",
-        });
-    });
 
      $("#upload_gra").click(function(){
         var formdata = new FormData($("form:first")[0]);
@@ -82,7 +75,6 @@ $(function(){
             processData:false,
             success:function(data){
                 $(".gra_show").attr("src", data);
-                $("#dash_gra").attr("src", data);
                 $("#change_size").css("display", "none");
                 $("#lean_overlay").css("display", "none");
             }

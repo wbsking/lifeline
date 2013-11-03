@@ -49,7 +49,7 @@ $(
                 if (username&&passwd&&email){
                     passwd = hex_md5(passwd);
                     post_data = {"name":username, "password":passwd, "email":email,
-                        "platform":"web", "is_remember":check
+                                 "is_remember":check
                     };
                     $.ajax({
                         url:"/user/register",
@@ -71,7 +71,7 @@ $(
                 if(username&&passwd){
                     passwd = hex_md5(passwd);
                     post_data = {"name":username, "password":passwd, 
-                        "platform":"web", "is_remember":check};
+                                 "is_remember":check};
                     $.ajax({
                         url:'/user/login',
                         type:'POST',

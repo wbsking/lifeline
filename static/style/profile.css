@@ -277,6 +277,10 @@ div .gender{
     background-color:#60d6a7;
 }
 
+.gender_hilight{
+    background-color:#60d6a7;
+}
+
 div .birthday{
     height:30px;
     margin-left:200px;
@@ -407,3 +411,12 @@ div .birthday{
     bottom:0;
 }
 
+
+#save_status{
+    width:300px;
+    height:30px;
+    color:red;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:10px;
+}

@@ -8,6 +8,8 @@
 {% block js_header %}
 <script type="text/javascript" src="/static/js/jquery.leanModal.min.js"></script>
 <script type="text/javascript" src="/static/js/jquery.imgareaselect.min.js"></script>
+<script type="text/javascript" src="/static/js/json2.js"></script>
+<script type="text/javascript" src="/static/js/md5.js"></script>
 <script type="text/javascript" src="/static/js/profile.js"></script>
 {% end %}
 
@@ -17,18 +19,22 @@
         <div class="user_dash">
             <div class="user_profile">
                 <div class="user_gravatar">
-                    <image id="dash_gra" src="/image/5237068479ed331497f56226" />
+                {% if user_info.get("gravatar") %}
+                    <image id="dash_gra" src="/image/{{ user_info.get("gravatar") }}" />
+                {% else %}
+                    <image id="dash_gra" src="/static/img/photo.jpg" />
+                {% end %}
                 </div>
             </div>
             <div class="u_info">
-                <div class="user_name">sking</div>
+                <div class="user_name">{{ user_info.get("user_name") }}</div>
                 <div class="u_num">
                     <div class="dot_num">
-                        <div class="num"><strong>0</strong></div>
+                        <div class="num"><strong>{{ user_info.get("dot_num") }}</strong></div>
                         <div class="desc">lifeDot</div>
                     </div>
                     <div class="friend_num">
-                        <div class="num"><strong>0</strong></div>
+                        <div class="num"><strong>{{ user_info.get("friend_num") }}</strong></div>
                         <div class="desc">朋友</div>
                     </div>
                 </div>

@@ -16,4 +16,49 @@
     </div>
 </div>
 <button id="passwd_save" class="save_info_btn btn btn-primary">保存</button>
+<div id="save_status"></div>
 
+<script language="javascript">
+$("input").focus(function(){
+    $(this).css({"border-color":"rgba(82,168,236,0.8)"});
+});
+$("#passwd_save").click(function(){
+    var old_passwd = $.trim($("#old_passwd").val());
+    var new_passwd = $.trim($("#new_passwd").val());
+    var new_passwd_2 = $.trim($("#new_passwd_2").val());
+    if(!old_passwd){
+        $("#save_status").text("密码不能为空");
+        $('#old_passwd').css({'border-color':'rgba(255, 0, 0, 0.3)'});
+    }
+    else if(!new_passwd){
+        $("#save_status").text("密码不能为空");
+        $('#new_passwd').css({'border-color':'rgba(255, 0, 0, 0.3)'});
+    }
+    else if(!new_passwd_2){
+        $("#save_status").text("密码不能为空");
+        $('#new_passwd_2').css({'border-color':'rgba(255, 0, 0, 0.3)'});
+    }
+    else if(new_passwd != new_passwd_2){
+        $("#save_status").text("两次输入新密码不相等");
+        $('#new_passwd_2').css({'border-color':'rgba(255, 0, 0, 0.3)'});
+        $('#new_passwd').css({'border-color':'rgba(255, 0, 0, 0.3)'});
+    }
+    else{
+        $.ajax({
+            url:'/user/profile/passwd',
+            type:"POST",
+            dataType:'json',
+            data:JSON.stringify({"old_passwd":hex_md5(old_passwd),
+                                 "new_passwd":hex_md5(new_passwd)}),
+            success:function(data){
+                var code = data.code;
+                var message = data.message;
+                if(code == 0){
+                    $("#save_status").css({"color":"rgba(0, 255, 0, 0.5)"});
+                }
+                $("#save_status").text(message);
+            }
+        });
+    }
+});
+</script>

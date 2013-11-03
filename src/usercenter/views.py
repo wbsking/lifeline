@@ -40,7 +40,11 @@ class mainHandler(baseHandler):
             self.redirect(LOGIN_URL)
         else:
             profile = Profile.get(uid=self.current_user)
-            self.render('home.html', profile=profile)
+            user_info = {"uid":profile.uid,
+                        "gravatar":profile.gravatar,
+                         "dot_num":0,
+                         "friend_num":0}
+            self.render('home.html', user_info=user_info)
 
 class registerHandler(baseHandler):
     def get(self):
@@ -104,6 +108,7 @@ class loginHandler(baseHandler):
             token = gen_token(user.uid)
             Token.create(uid=user.uid, token=token)
         else:
+            token.update_expiretime()
             token = token.token
         if is_remember == '0':
             self.set_secure_cookie('token', token)
@@ -129,7 +134,15 @@ class modifyHandler(baseHandler):
             self.redirect(LOGIN_URL)
         else:
             profile = Profile.get(uid=self.current_user)
-            self.render('profile.html', profile=profile)
+            user = User.get(uid=self.current_user)
+            user_info = {"user_name":user.name,
+                         "dot_num":0,
+                         "friend_num":0,
+                         "gravatar":profile.gravatar,
+                         "real_name":profile.real_name if profile.real_name else '',
+                         "gender":profile.gender,
+                         "birthday":profile.birthday}
+            self.render('profile.html', user_info=user_info)
 
     def post(self):
         pass
@@ -148,3 +161,27 @@ class profilePasswdHandler(baseHandler):
             self.redirect(LOGIN_URL)
         else:
             self.render('profile_passwd.html')
+    
+    def post(self):
+        if not self.current_user:
+            self.redirect(LOGIN_URL)
+        try:
+            data = json.loads(self.request.body)
+        except:
+            self.json_response(status=400)
+        old_passwd = data.get('old_passwd')
+        new_passwd = data.get('new_passwd')
+        if not old_passwd or not new_passwd:
+            return self.json_response({"code":1, 'message':u'密码不能为空'},
+                                 status=200)
+        user = User.get(uid=self.current_user)
+        if user.passwd != old_passwd:
+            return self.json_response({"code":2, 'message':u'旧密码不正确'},
+                                 status=200)
+        if len(new_passwd) != MD5_LENGTH:
+            return self.json_response({"code":3, 'message':u'新密码格式不正确'},
+                                 status=200)
+        user.update(passwd=new_passwd)
+        return self.json_response({'code':0, 'message':u'修改成功'},
+                             status=200)
+

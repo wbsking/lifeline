@@ -74,6 +74,12 @@ class User(baseModel):
         SESSION.commit()
         return user.uid
 
+    def update(self, **kwargs):
+        for key, value in kwargs.iteritems():
+            setattr(self, key, value)
+        SESSION.add(self)
+        SESSION.commit()
+
 class Token(baseModel):
     __tablename__ = 'token'
     __table_args__ = {"mysql_engine":'InnoDB', "mysql_charset":'utf8'}
@@ -111,6 +117,11 @@ class Token(baseModel):
         SESSION.add(token)
         SESSION.commit()
 
+    def update_expiretime(self):
+        self.expire_time = datetime.utcnow() + timedelta(days=TOKEN_EXPIRE_DAYS)
+        SESSION.add(self)
+        SESSION.commit()
+
 class Profile(baseModel):
     __tablename__ = 'profile'
     __table_args__ = {"mysql_engine":'InnoDB', "mysql_charset":'utf8'}
@@ -121,7 +132,7 @@ class Profile(baseModel):
     birthday = Column(DateTime)
     real_name = Column(VARCHAR(32))
     nickname = Column(VARCHAR(32))
-    gender = Column(SmallInteger)
+    gender = Column(SmallInteger, default=3)
     create_time = Column(DateTime, default=datetime.utcnow)
     update_time = Column(DateTime, onupdate=datetime.utcnow)
     deleted = Column(Boolean, default=False)
