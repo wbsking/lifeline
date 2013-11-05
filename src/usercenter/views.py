@@ -154,6 +154,18 @@ class profileBaseHandler(baseHandler):
             self.redirect(LOGIN_URL)
         else:
             self.render('profile_base.html')
+    
+    def post(self):
+        if not self.current_user:
+            self.redirect(LOGIN_URL)
+        try:
+            data = json.loads(self.request.body)
+        except:
+            self.json_response(status=400)
+        gravatar = data.get('gravatar')
+        gender = data.get('gender')
+        username = data.get('username')
+
 
 class profilePasswdHandler(baseHandler):
     def get(self):
@@ -172,16 +184,16 @@ class profilePasswdHandler(baseHandler):
         old_passwd = data.get('old_passwd')
         new_passwd = data.get('new_passwd')
         if not old_passwd or not new_passwd:
-            return self.json_response({"code":1, 'message':u'密码不能为空'},
+            return self.json_response({"code":1, 'message':'password empty'},
                                  status=200)
         user = User.get(uid=self.current_user)
         if user.passwd != old_passwd:
-            return self.json_response({"code":2, 'message':u'旧密码不正确'},
+            return self.json_response({"code":2, 'message':'password error'},
                                  status=200)
         if len(new_passwd) != MD5_LENGTH:
-            return self.json_response({"code":3, 'message':u'新密码格式不正确'},
+            return self.json_response({"code":3, 'message':'unknown new password'},
                                  status=200)
         user.update(passwd=new_passwd)
-        return self.json_response({'code':0, 'message':u'修改成功'},
+        return self.json_response({'code':0, 'message':'save success'},
                              status=200)
 

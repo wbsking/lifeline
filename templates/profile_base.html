@@ -14,16 +14,16 @@
         </form>
         <a id="modal_link" rel="leanModal" name="change_size" href="#change_size"></a>
     </div>
-    <div class="username input-prepend">
+    <div class="username input-prepend" default="{{ user_info.get('user_name', '') }}">
         <span class="add-on">用户昵称</span>
         <input id="username" type="text" value="{{ user_info.get('user_name', '') }}"/>
     </div>
-    <div class="real_name input-prepend">
+    <div class="real_name input-prepend" default="{{ user_info.get('real_name', '') }}">
         <span class="add-on">真实姓名</span>
         <input id="realname" type="text" value="{{ user_info.get('real_name', '') }}" />
     </div>
 
-    <div class="gender" gender="{{ user_info.get('gender', 3) }}">
+    <div class="gender" gender="3" default="{{ user_info.get('gender', 3) }}">
         <span class="pre_span">性别</span>
         <div class="male">男</div>
         <div class="female">女</div>
@@ -31,11 +31,11 @@
     </div>
     <div class="birthday">
         <span class="pre_span">生日</span>
-        <input class="i1" type="text" maxlength="4" value="{{ user_info.get('birthday_year', '') }}"/>
+        <input class="i1" type="text" maxlength="4" default="{{ user_info.get('birthday_year'), ''}}" value="{{ user_info.get('birthday_year', '') }}"/>
         <span class="lab_span">年</span>
-        <input class="i0" type="text" maxlength="2" value="{{ user_info.get('birthday_month', '') }}">
+        <input class="i0" type="text" maxlength="2" default="{{ user_info.get('birthday_month', '') }}" value="{{ user_info.get('birthday_month', '') }}">
         <span class="lab_span">月</span>
-        <input class="i0" type="text" maxlength="2" value="{{ user_info.get('birthday_day', '') }}">
+        <input class="i0" type="text" maxlength="2" default="{{ user_info.get('birthday_day', '') }}" value="{{ user_info.get('birthday_day', '') }}">
         <span class="lab_span">日</span>
     </div>
 </div>
@@ -71,10 +71,10 @@
         $(".gender").attr('gender', $(this).index());
     });
     $("#base_save").click(function(){
-        var data = {};
+        var json_data = {};
         var user_name = $.trim($("#username").val());
-        var real_name = $.trm($("#realname").val());
-        var gender = $("#.gender").attr('gender');
+        var real_name = $.trim($("#realname").val());
+        var gender = $(".gender").attr('gender');
         var birth_year = parseInt($(".birthday input:eq(0)").val());
         var birth_month = parseInt($(".birthday input:eq(1)").val());
         var birth_day = parseInt($(".birthday input:eq(2)").val());
@@ -82,17 +82,38 @@
             var birthday = new Date();
             try{
                 birthday.setFullYear(birth_year, birth_month, birth_day);
+                json_data["birth_year"] = birth_year;
+                json_data["birth_month"] = birth_month;
+                josn_data["birth_day"] = birth_day;
             }catch(e){
                 $("#save_status").text("输入生日日期不正确");
             }
-            data["birth_year"] = birth_year;
-            data["birth_month"] = birth_month;
-            data["birth_day"] = birth_day;
         }else if(user_name){
-            data["user_name"] = user_name;
+            json_data["user_name"] = user_name;
         }else if(real_name){
-            data['real_name'] = real_name;
+            json_data['real_name'] = real_name;
         }
-        data["gender"] = gender;
+        if(gender != $(".gender").attr('default')){
+            json_data["gender"] = gender;
+        }
+        var gravatar = $(".gra_show").attr("src");
+        if(gravatar){
+            var gra = gravatar.split('/');
+            gra = gra[gra.length - 1];
+            json_data['gravatar'] = gra;
+        };
+        console.log(json_data);
+        if(json_data){
+            $.ajax({
+                url:"/user/profile/base",
+                dataType:"json",
+                data:JSON.stringify(json_data),
+                type:'POST',
+                success:function(data){
+                    var code = data.code;
+                    var message = data.message;
+                }
+            });
+        }
     });
 </script>

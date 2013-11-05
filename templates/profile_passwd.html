@@ -55,8 +55,14 @@ $("#passwd_save").click(function(){
                 var message = data.message;
                 if(code == 0){
                     $("#save_status").css({"color":"rgba(0, 255, 0, 0.5)"});
+                    $("#save_status").text("保存成功");
+                }else if(code == 1){
+                    $("#save_status").text("原始密码错误");
+                }else if(code == 2){
+                    $("#save_status").text("新密码错误");
+                }else{
+                    $("#save_status").text("保存失败");
                 }
-                $("#save_status").text(message);
             }
         });
     }
