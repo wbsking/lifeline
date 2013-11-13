@@ -76,7 +76,8 @@ class User(baseModel):
 
     def update(self, **kwargs):
         for key, value in kwargs.iteritems():
-            setattr(self, key, value)
+            if value is not None:
+                setattr(self, key, value)
         SESSION.add(self)
         SESSION.commit()
 
@@ -159,6 +160,13 @@ class Profile(baseModel):
             return query
         except NoResultFound:
             return None
+
+    def update(self, **kwargs):
+        for key, value in kwargs.iteritems():
+            if value is not None:
+                setattr(self, key, value)
+        SESSION.add(self)
+        SESSION.commit()
 
 if __name__ == '__main__':
     init_db()

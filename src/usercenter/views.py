@@ -8,6 +8,7 @@ import models
 from models import User, Token
 from models import Profile
 from utils import gen_token, platform_hash
+from utils import date_to_datetime
 from settings import MD5_LENGTH, TOKEN_EXPIRE_DAYS
 from settings import LOGIN_URL
 from settings import LOGOUT_URL
@@ -162,10 +163,36 @@ class profileBaseHandler(baseHandler):
             data = json.loads(self.request.body)
         except:
             self.json_response(status=400)
+        print data
         gravatar = data.get('gravatar')
         gender = data.get('gender')
         username = data.get('username')
-
+        realname = data.get('realname')
+        birth_year = data.get('birth_year')
+        birth_month = data.get('birth_month')
+        birth_day = data.get('birth_day')
+        birthday = date_to_datetime(birth_year, birth_month, birth_day)
+        profile = Profile.get(uid=self.current_user)
+        user = User.get(uid=self.current_user)
+        if not user:
+            return self.json_response({"code":1, "message":"permission denied"})
+        else:
+            user.update(name=username)
+        if not profile:
+            Profile.create(uid=self.current_user,
+                           gravatar=gravatar,
+                           birthday=birthday,
+                           username=username,
+                           gender=gender,
+                           real_name=realname)
+        else:
+            profile.update(gravatar=gravatar,
+                           birthday=birthday,
+                           gender=gender,
+                           username=username,
+                           real_name=realname)
+            return self.json_response({"code":0, 'message':'save success'},
+                                      status=200)
 
 class profilePasswdHandler(baseHandler):
     def get(self):

@@ -23,7 +23,7 @@
         <input id="realname" type="text" value="{{ user_info.get('real_name', '') }}" />
     </div>
 
-    <div class="gender" gender="3" default="{{ user_info.get('gender', 3) }}">
+    <div class="gender" gender="{{ user_info.get('gender', 3) }}" default="{{ user_info.get('gender', 3) }}">
         <span class="pre_span">性别</span>
         <div class="male">男</div>
         <div class="female">女</div>
@@ -73,25 +73,35 @@
     $("#base_save").click(function(){
         var json_data = {};
         var user_name = $.trim($("#username").val());
+        var old_username = $.trim($(".username").attr("default"));
         var real_name = $.trim($("#realname").val());
+        console.log(real_name);
+        var old_realname = $.trim($(".real_name").attr("default"));
         var gender = $(".gender").attr('gender');
         var birth_year = parseInt($(".birthday input:eq(0)").val());
         var birth_month = parseInt($(".birthday input:eq(1)").val());
         var birth_day = parseInt($(".birthday input:eq(2)").val());
         if(birth_year && birth_month && birth_day){
-            var birthday = new Date();
-            try{
-                birthday.setFullYear(birth_year, birth_month, birth_day);
-                json_data["birth_year"] = birth_year;
-                json_data["birth_month"] = birth_month;
-                josn_data["birth_day"] = birth_day;
-            }catch(e){
-                $("#save_status").text("输入生日日期不正确");
+            var old_year = parseInt($(".birthday input:eq(0)").attr('default'));
+            var old_month = parseInt($(".birthday input:eq(1)").attr('default'));
+            var old_day = parseInt($(".birthday input:eq(2)").attr('default'));
+            if(old_year != birth_year && old_month != birth_month && old_day != birth_day){
+                try{
+                    birth_month -= 1;
+                    var birthday = new Date(birth_year, birth_month, birth_day);
+                    json_data["birth_year"] = birthday.getFullYear();
+                    json_data["birth_month"] = birthday.getMonth() + 1;
+                    json_data["birth_day"] = birthday.getDate();
+                }catch(e){
+                    console.log(e);
+                    $("#save_status").text("输入生日日期格式不正确");
+                    return
+                }
             }
-        }else if(user_name){
-            json_data["user_name"] = user_name;
-        }else if(real_name){
-            json_data['real_name'] = real_name;
+        }else if(user_name && (user_name != old_username)){
+            json_data["username"] = user_name;
+        }else if(real_name && (real_name != old_realname)){
+            json_data['realname'] = real_name;
         }
         if(gender != $(".gender").attr('default')){
             json_data["gender"] = gender;
@@ -102,8 +112,7 @@
             gra = gra[gra.length - 1];
             json_data['gravatar'] = gra;
         };
-        console.log(json_data);
-        if(json_data){
+        if(!$.isEmptyObject(json_data)){
             $.ajax({
                 url:"/user/profile/base",
                 dataType:"json",
