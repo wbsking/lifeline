@@ -31,11 +31,14 @@
     </div>
     <div class="birthday">
         <span class="pre_span">生日</span>
-        <input class="i1" type="text" maxlength="4" default="{{ user_info.get('birthday_year'), ''}}" value="{{ user_info.get('birthday_year', '') }}"/>
+        {% set birth_year = user_info.get('birthday', {}).get('year', '') %}
+        <input class="i1" type="text" maxlength="4" default="{{ birth_year }}" value="{{ birth_year }}"/>
         <span class="lab_span">年</span>
-        <input class="i0" type="text" maxlength="2" default="{{ user_info.get('birthday_month', '') }}" value="{{ user_info.get('birthday_month', '') }}">
+        {% set birth_month = user_info.get('birthday', {}).get('month', '') %}
+        <input class="i0" type="text" maxlength="2" default="{{ birth_month }}" value="{{ birth_month }}">
         <span class="lab_span">月</span>
-        <input class="i0" type="text" maxlength="2" default="{{ user_info.get('birthday_day', '') }}" value="{{ user_info.get('birthday_day', '') }}">
+        {% set birth_day = user_info.get('birthday', {}).get('day', '') %}
+        <input class="i0" type="text" maxlength="2" default="{{ birth_day }}" value="{{ birth_day }}">
         <span class="lab_span">日</span>
     </div>
 </div>

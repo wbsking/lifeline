@@ -4,7 +4,8 @@
 import random
 import time
 import hashlib
-from datetime import datetime, timedelta, date, time
+import datetime
+from datetime import datetime, timedelta, date
 
 TIME_FORMAT = '%Y-%m-%d %H:%M:%S.%f'
 
@@ -38,6 +39,6 @@ def gen_uid(uid):
 def date_to_datetime(year, month, day):
     try:
         year, month, day = int(year), int(month), int(day)
-        return datetime.combine(date(year, month, day), time())
+        return datetime.combine(date(year, month, day), datetime.time())
     except:
         return None

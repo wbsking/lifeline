@@ -40,11 +40,7 @@ class mainHandler(baseHandler):
         if not self.current_user:
             self.redirect(LOGIN_URL)
         else:
-            profile = Profile.get(uid=self.current_user)
-            user_info = {"uid":profile.uid,
-                        "gravatar":profile.gravatar,
-                         "dot_num":0,
-                         "friend_num":0}
+            user_info = get_user_info(self.current_user)
             self.render('home.html', user_info=user_info)
 
 class registerHandler(baseHandler):
@@ -134,15 +130,7 @@ class modifyHandler(baseHandler):
         if not self.current_user:
             self.redirect(LOGIN_URL)
         else:
-            profile = Profile.get(uid=self.current_user)
-            user = User.get(uid=self.current_user)
-            user_info = {"user_name":user.name,
-                         "dot_num":0,
-                         "friend_num":0,
-                         "gravatar":profile.gravatar,
-                         "real_name":profile.real_name if profile.real_name else '',
-                         "gender":profile.gender,
-                         "birthday":profile.birthday}
+            user_info = get_user_info(self.current_user)
             self.render('profile.html', user_info=user_info)
 
     def post(self):
@@ -154,7 +142,8 @@ class profileBaseHandler(baseHandler):
         if not self.current_user:
             self.redirect(LOGIN_URL)
         else:
-            self.render('profile_base.html')
+            user_info = get_user_info(self.current_user)
+            self.render('profile_base.html', user_info=user_info)
     
     def post(self):
         if not self.current_user:
@@ -224,3 +213,22 @@ class profilePasswdHandler(baseHandler):
         return self.json_response({'code':0, 'message':'save success'},
                              status=200)
 
+def get_user_info(uid):
+    user = User.get(uid=uid)
+    profile = Profile.get(uid=uid)
+    birthday = profile.birthday
+    if not birthday:
+        birth_day, birth_month, birth_year = None, None, None
+    else:
+        birth_day, birth_month, birth_year = birthday.day, birthday.month, birthday.year
+    user_info = {"user_name":user.name,
+                    "dot_num":0,
+                    "friend_num":0,
+                    "gravatar":profile.gravatar,
+                    "real_name":profile.real_name if profile.real_name else '',
+                    "gender":profile.gender,
+                    "birthday":{"day":birth_day,
+                                "month":birth_month,
+                                "year":birth_year}
+                 }
+    return user_info
