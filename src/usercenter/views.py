@@ -9,31 +9,10 @@ from models import User, Token
 from models import Profile
 from utils import gen_token, platform_hash
 from utils import date_to_datetime
+from src.lib.handler import baseHandler
 from settings import MD5_LENGTH, TOKEN_EXPIRE_DAYS
 from settings import LOGIN_URL
-from settings import LOGOUT_URL
-from settings import REGISTER_URL
-from settings import PROFILE_URL
 
-class baseHandler(tornado.web.RequestHandler):
-    @property
-    def session(self):
-        return models.SESSION
-    
-    def get_current_user(self):
-        token = self.get_secure_cookie('token')
-        if not token:
-            return None
-        token = Token.get_by_uid(token=token)
-        if not token:
-            return None
-        return token.uid
-
-    def json_response(self, data='', status=200):
-        self.set_header("Content-Type", "application/json;charset=UTF-8")
-        data = json.dumps(data)
-        self.set_status(status)
-        self.finish(data)
 
 class mainHandler(baseHandler):
     def get(self):
@@ -42,6 +21,7 @@ class mainHandler(baseHandler):
         else:
             user_info = get_user_info(self.current_user)
             self.render('home.html', user_info=user_info)
+
 
 class registerHandler(baseHandler):
     def get(self):

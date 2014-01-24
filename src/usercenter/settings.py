@@ -3,13 +3,6 @@
 TOKEN_EXPIRE_DAYS = 14
 MD5_LENGTH = 32
 
-DEFAULT_SMALL_GRAVATAR = '522f2c8179ed330e6473bc5f'
-
-UCENTER_DB = {'host':'127.0.0.1:3306',
-              'database':'usercenter',
-              'user':'root',
-              'passwd':'lifeline'
-            }
 
 LOGIN_URL = '/user/login'
 REGISTER_URL = '/user/register'
@@ -17,3 +10,4 @@ LOGOUT_URL = '/user/logout'
 PROFILE_URL = '/user/profile'
 PROFILE_BASE_URL = '/user/profile/base'
 PROFILE_PASSWD_URL = '/user/profile/passwd'
+USER_HOME_PAGE_URL = '/user/(\d+)'
