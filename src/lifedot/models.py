@@ -38,11 +38,11 @@ class LifeDot(baseModel):
     uid = Column(BigInteger)
     privacy = Column(SmallInteger, default=0)
     images = Column(VARCHAR(length=4096L), default='')
-    content = Column(UnicodeText, default='')
+    content = Column(UnicodeText, default=u'')
     create_time = Column(DateTime, default=datetime.utcnow)
     update_time = Column(DateTime, onupdate=datetime.utcnow)
     publish_time = Column(DateTime)
-    deleted = Colum(Boolean, default=False)
+    deleted = Column(Boolean, default=False)
 
     def __init__(self, uid, content, **kwargs):
         self.uid = uid
@@ -53,6 +53,7 @@ class LifeDot(baseModel):
         dot = LifeDot(uid, content, **kwargs)
         SESSION.add(dot)
         SESSION.commit()
+        return dot
 
 if __name__ == "__main__":
     init_db()

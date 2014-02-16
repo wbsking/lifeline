@@ -1,5 +1,7 @@
 $(
     function(){
+        $.fn.fullpage();
+
         width = $(window).width();
         $("#header_title").css({"margin-left":width/2.5});
         $('#check_icon').click(function(){
@@ -11,7 +13,6 @@ $(
                 $('#check_icon').attr('check', '0');
             }
         });
-        
 
         $('#header_btn').click(function(){
             if($(this).attr('login_type') == '0'){

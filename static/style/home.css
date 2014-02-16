@@ -252,8 +252,9 @@
     position:relative;
     min-height:120px;
     margin-left:180px;
+    margin-bottom:10px;
     border-radius:0 10px 10px 10px;
-    background-color:rgba(0, 200, 200, 0.2);
+    background-color:rgba(-1, 200, 200, 0.2);
     //background-color:#61b7cf;
 }
 
@@ -324,6 +325,13 @@
     width:485px;
     margin-left:40px;
     margin-top:-80px;
+    padding:4px 4px 0 4px;
+    text-align:left;
+}
+
+.content a{
+    text-decoration:none;
+    cursor:pointer;
 }
 
 .line_foot{
