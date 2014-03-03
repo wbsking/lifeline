@@ -248,13 +248,13 @@
 }
 
 .line_element{
-    width:525px;
+    width:580px;
     position:relative;
     min-height:120px;
-    margin-left:180px;
+    margin-left:130px;
     margin-bottom:10px;
     border-radius:0 10px 10px 10px;
-    background-color:rgba(-1, 200, 200, 0.2);
+    background-color:rgba(1, 200, 200, 0.2);
     //background-color:#61b7cf;
 }
 
@@ -265,9 +265,9 @@
 .line_element:before{
     content:'';
     position:absolute;
-    width:140px;
+    width:94px;
     top:40px;
-    left:-180px;
+    left:-130px;
     height:3px;
     background-color:rgba(150, 150, 150, 0.5);
 }
@@ -282,7 +282,7 @@
     width:10px;
     height:10px;
     top:34px;
-    left:-189px;
+    left:-139px;
     border-radius:10px;
     border-width:2px;
     border-color:white;
@@ -296,18 +296,19 @@
 
 .time_div{
     position:absolute;
-    top:18px;
-    left:-165px;
-    width:120px;
-    height:35px;
+    top:19px;
+    left:-131px;
+    width:100px;
+    height:50px;
 }
 
 .time_div .send_hours{
-    font-size:30px;
+    font-size:20px;
     color:rgba(160, 160, 160, 1);
 }
 
 .time_div .send_days{
+    margin-top:3px;
     font-size:17px;
     color:rgba(150, 150, 150, 1);
 }
@@ -316,14 +317,13 @@
     width:80px;
     height:80px;
     border-radius:40px;
-    margin-left:-40px;
+    margin-left:-35px;
     background-color:rgba(100, 100, 100, 1);
 }
 
 .content{
     min-height:80px;
-    width:485px;
-    margin-left:40px;
+    width:520px;
     margin-top:-80px;
     padding:4px 4px 0 4px;
     text-align:left;

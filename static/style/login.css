@@ -3,31 +3,7 @@ body{
     padding:0;
     text-align:center;
     font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
-.section{
-    margin-bottom:0;
-}
-
-#section0{
     background:#eee url("/static/img/background.png");
-}
-
-#section1{
-    background:url("/static/img/background_1.jpg");
-}
-
-#section2{
-    background:url("/static/img/background_2.png");
-}
-
-#section3{
-    background:#000 url("/static/img/background_3.jpg") no-repeat;
-}
-.section h1{
-    width:500px;
-    margin-left:50px;
-    color:rgba(150, 150, 150, 0.8);
 }
 
 
@@ -74,7 +50,7 @@ body{
     width:350px;
     height:280px;
     background-color:rgba(190, 190, 190, 0.2);
-    border-radius:15px;
+    border-radius:10px;
 }
 
 .login_input{
