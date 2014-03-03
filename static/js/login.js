@@ -1,6 +1,5 @@
 $(
     function(){
-        $.fn.fullpage();
 
         width = $(window).width();
         $("#header_title").css({"margin-left":width/2.5});
