@@ -23,3 +23,7 @@ $ ->
                 dataType: "json"
                 success: (data) ->
                     code = data.code
+                    if code == 0
+                        line_content = data.content
+                        $ ".line_content"
+                            .prepend line_content

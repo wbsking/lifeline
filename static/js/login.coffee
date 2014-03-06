@@ -101,7 +101,3 @@ $ ->
                                     .text "登录失败"
                             else
                                 window.location.href =  "/"
-
-
-
-
