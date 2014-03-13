@@ -39,6 +39,34 @@ $ ->
                 else
                     f_0 = $ "form"
                     f_0.after f_0.clone()
-                    $("form:first").css 
+                    $("form:first").css
+            reader.readAsDataURL file
 
+    $("#profile_base").click ->
+        $.ajax
+            type: "GET"
+            url: "/user/profile/base"
+            dateType:"html"
+            success: (data) ->
+                $("#base_info").html $(data)
 
+    $("#profile_passwd").click ->
+        $.ajax
+            type: "GET"
+            url: "/user/profile/passwd"
+            dataType: "html"
+            success: (data) ->
+                $("#base_info").html $(data)
+
+    $("#upload_gra").click ->
+        formdata = new Formdata($("form:first")[0])
+        $.ajax
+            url: "/image/upload"
+            type: "POST"
+            data: formdata
+            contentType: false
+            processData: false
+            success: (data) ->
+                $(".gra_show").attr "src", data
+                $("#change_size").css "display", "none"
+                $("#lean_overlay").css "display", "none"
