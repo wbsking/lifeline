@@ -1,5 +1,5 @@
 init = ->
-    width = $(window).width
+    width = $(window).width()
     $ "#header_title"
         .css "margin-left", width/2.5
 
