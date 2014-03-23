@@ -1,13 +1,13 @@
+@color_background: rgba(100, 100, 100, 0.4);
+@logo_color: #5ccdc9;
+
 body{
     margin:0;
     padding:0;
     text-align:center;
     font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
     overflow-y:scroll;
-    background-position:-100px 50px;
-    background-attachment:fixed;
     background:#eee url("/static/img/background.png");
-    background-repeat:no-repeat;
 }
 
 #header{
@@ -19,7 +19,7 @@ body{
     right:0;
     left:0;
     z-index:1000;
-    background-color: rgba(100, 100, 100, 0.4);
+    background-color: @color_background;
 }
 
 #header_nav{
@@ -49,12 +49,13 @@ body{
 .btn-group{
     float:right;
 }
+
 #nav_logo{
     color:rgba(240, 240, 240, 0.5);
 }
 
 #nav_logo:hover{
-    color:rgb(255, 255, 255);
+    color: @logo_color;
 }
 
 #nav_right{
@@ -132,12 +133,11 @@ body{
     float:left;
     color:white;
     font-size:17px;
-    border-radius:3px;
     margin-left:2px;
 }
 
 #user_home_page:hover{
-    background-color:#000;
+    background-color: #000;
 }
 
 #home_page{
