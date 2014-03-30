@@ -1,5 +1,5 @@
 @font_color: white;
-@font_hover_color: #5ccdc9;
+@font_hover_color: #08c;
 @background_color: rgba(150, 150, 150, 0.2);
 @border_color: rgba(150, 150, 150, 0.8);
 
@@ -133,6 +133,7 @@
 
 .dash_left li:hover{
     background-color:rgba(100, 100, 100, 0.5);
+    background-color:#08c;
 }
 
 
@@ -185,7 +186,12 @@
     margin-left:auto;
     margin-right:auto;
     color:@font_color;
+    border-color:@background_color;
     background-color:@background_color;
+}
+
+#new_post_text:focus{
+    border-color: rgba(82, 168, 236, 0.8);
 }
 
 .post_info{
@@ -201,18 +207,20 @@
     line-height:30px;
     text-align:center;
     float:left;
-    background-color:rgba(200, 200, 200, 0.4);
+    background-color:rgba(180, 180, 180, 0.5);
     cursor:default;
     border-radius:5px;
     margin-right:10px;
+    color:@font_color;
 }
 
 .post_div:hover{
-    background-color:rgba(200, 200, 200, 1);
+    background-color:rgba(200, 200, 200, 0.8);
 }
 
-.post_info .btn{
+#post_dot {
     float:right;
+    margin-right:0;
 }
 
 .post_info .word_num{
@@ -221,6 +229,7 @@
     line-height:30px;
     text-align:center;
     float:right;
+    color:@font_color;
 }
 
 .line_content{
