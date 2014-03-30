@@ -2,6 +2,7 @@
 @font_hover_color: #08c;
 @background_color: rgba(150, 150, 150, 0.2);
 @border_color: rgba(150, 150, 150, 0.8);
+@blue_color: #08c;
 
 .container{
     width:960px;
@@ -132,7 +133,6 @@
 }
 
 .dash_left li:hover{
-    background-color:rgba(100, 100, 100, 0.5);
     background-color:#08c;
 }
 
@@ -163,7 +163,6 @@
 
 .lifeline{
     width:770px;
-    height:800px;
     margin-top:10px;
     float:right;
     background:rgba(130, 130, 130, 0.2);
@@ -215,7 +214,7 @@
 }
 
 .post_div:hover{
-    background-color:rgba(200, 200, 200, 0.8);
+    background-color:#08c;
 }
 
 #post_dot {
@@ -233,95 +232,62 @@
 }
 
 .line_content{
-    width:736px;
+    width:100%;
     margin-left:auto;
     margin-right:auto;
     margin-top:40px;
-    border-left-color:#61b7cf;
-    border-left-width:4px;
-    border-left-style:solid;
 }
 
 .line_element{
-    width:580px;
-    position:relative;
-    min-height:120px;
-    margin-left:130px;
-    margin-bottom:10px;
-    border-radius:0 10px 10px 10px;
-    background-color:rgba(1, 200, 200, 0.2);
-    //background-color:#61b7cf;
+    width:100%;
+    margin-top:10px;
+    border-bottom-color:rgba(200, 200, 200, 0.4);
+    border-bottom-style:dashed;
+    border-bottom-width:1px;
+    overflow:hidden;
 }
 
-.line_element:hover .send_hours{
-    color:rgba(80,80, 80, 1);
-}
-
-.line_element:before{
-    content:'';
-    position:absolute;
-    width:94px;
-    top:40px;
-    left:-130px;
-    height:3px;
-    background-color:rgba(150, 150, 150, 0.5);
-}
-
-.line_element:hover:before{
-    background-color:rgba(80,80, 80, 1);
-}
-
-.line_element:after{
-    content:"";
-    position:absolute;
-    width:10px;
-    height:10px;
-    top:34px;
-    left:-139px;
-    border-radius:10px;
-    border-width:2px;
-    border-color:white;
-    border-style:solid;
-    background-color:rgba(200, 200, 200, 1);
-}
-
-.line_element:hover:after{
-    background-color:rgba(80,80,80,1);
+.line_left_info{
+    float:left;
+    width:100px;
+    height:160px;
+    margin-left:30px;
 }
 
 .time_div{
-    position:absolute;
-    top:19px;
-    left:-131px;
+    margin-top:10px;
     width:100px;
     height:50px;
 }
 
 .time_div .send_hours{
     font-size:20px;
-    color:rgba(160, 160, 160, 1);
+    color:white;
 }
 
 .time_div .send_days{
-    margin-top:3px;
     font-size:17px;
-    color:rgba(150, 150, 150, 1);
+    color:white;
 }
 
 .line_gravatar{
     width:80px;
     height:80px;
     border-radius:40px;
-    margin-left:-35px;
+    margin-left:auto;
+    margin-right:auto;
     background-color:rgba(100, 100, 100, 1);
 }
 
 .content{
+    margin-top:60px;
+    float:right;
+    margin-right:40px;
     min-height:80px;
-    width:520px;
-    margin-top:-80px;
+    width:580px;
     padding:4px 4px 0 4px;
     text-align:left;
+    background-color:@blue_color;
 }
 
 .content a{
