@@ -1,59 +1,59 @@
 init = ->
     width = $(window).width()
-    $ "#header_title"
+    $("#header_title")
         .css "margin-left", width/2.5
 
 $ ->
     init()
-    $ "#check_icon"
+    $("#check_icon")
         .click ->
             check_attr = $(this).attr "check"
             if check_attr == "0"
-                $ this
+                $(this)
                     .children()
                     .attr "class", "icon-check"
-                $ this
+                $(this)
                     .attr "check", "1"
             else
-                $ this
+                $(this)
                     .children()
                     .attr "class", "icon-check-empty"
-                $ this
+                $(this)
                     .attr "check", '0'
-    $ "#header_btn"
+    $("#header_btn")
         .click ->
             login_text = "登录"
             reg_text = "注册"
-            if $(this).attr "login_type" == "0"
-                $ "#login_div"
+            if $(this).attr("login_type") == "0"
+                $("#login_div")
                     .animate {"height":"360px"}, 300
-                $ "#email_div"
+                $("#email_wrap")
                     .show 500
-                $ this
+                $(this)
                     .attr "login_type", "1"
-                $ this
+                $(this)
                     .text login_text
-                $ "#login_btn"
+                $("#login_btn")
                     .text reg_text
             else
-                $ "#email_div"
+                $("#email_wrap")
                     .hide 500
-                $ "#login_div"
+                $("#login_div")
                     .animate {"height":"270px"}, 300
-                $ this
+                $(this)
                     .attr "login_type", "0"
-                $ this
+                $(this)
                     .text reg_text
-                $ "#login_btn"
+                $("#login_btn")
                     .text login_text
-    $ "#login_btn"
+    $("#login_btn")
         .click ->
             username = $.trim $("#name").val()
             passwd = $.trim $("#passwd").val()
             check = $.trim $("#check_icon").val()
             alert_border = {"border":"1px solid rgba(255, 0, 0, 0.3)"}
             if not username
-                $ "#name"
+                $("#name")
                     .css alert_border
             if not passwd
                 $ "#passwd"
@@ -61,7 +61,7 @@ $ ->
             if $("#header_btn").attr('login_type') == "1"
                 email = $.trim $("#email").val()
                 if not email
-                    $ "#email"
+                    $("#email")
                         .css alert_border
                 if username and passwd and email
                     passwd = hex_md5 passwd
@@ -79,7 +79,7 @@ $ ->
                             code =  data.code
                             message = data.message
                             if code != 1
-                                $ "#login_status"
+                                $("#login_status")
                                     .text "注册失败"
                             else
                                 window.location.href = '/'
