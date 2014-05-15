@@ -3,16 +3,18 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" href="/static/style/lib/font-awesome.min.css">
+        <link rel="stylesheet" href="/static/style/lib/animate.css">
         <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="/static/bootstrap/css/bootstrap-responsive.min.css">
         <link rel="stylesheet" href="/static/style/base.css"/>
         {% block css_header %}{% end %}
         <script type="text/javascript" src="/static/js/lib/jquery.js"></script>
         <script type="text/javascript" src="/static/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/static/js/lib/headroom.min.js"></script>
         {% block js_header %}{% end %}
     </head>
     <body>
-        <div id="header" class="header">
+        <header id="header" class="header">
             <div id="header_nav" class="header_nav">
                 <div id="nav_left" class="nav_left">
                     <a id="home_page" class="nav_highlight" href="/">首页</a>
@@ -25,23 +27,16 @@
                     <div class="btn-group">
                         <div id="nav_setting_btn" class="dropdown-toggle" data-toggle="dropdown">
                             设置
-                            <span class="caret"></span>
                         </div>
                         <ul class="dropdown-menu" id="header-dropdown-menu">
-                            <li class="dropdown-caret">
-                                <span class="caret-outer"></span>
-                                <span class="caret-inner"></span>
-                            </li>
                             <li id="modify_profile"><a href="/user/profile">修改个人资料</a></li>
-                            <li class="divider"></li>
-                            <li id="import_third"><a href="#">导入第三方账户</a></li>
                             <li class="divider"></li>
                             <li id="logout"><a href="/user/logout">登出</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
-        </div>
+        </header>
         {% block body %}{% end %}
     </body>
 </html>
